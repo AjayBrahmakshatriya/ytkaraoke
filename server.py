@@ -5,15 +5,15 @@ gts = 0
 class RequestHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
 		global gts
-		if self.path == "/reset":
+		if self.path.startswith("/reset"):
 			self.send_response(200)
 			self.end_headers()
 			ts = datetime.datetime.now().timestamp()
-			ts = int(ts * 1000 + 30000)
+			ts = int(ts * 1000 + 60000)
 			gts = ts
 			self.wfile.write(str(ts).encode())
 			return
-		elif self.path == "/fetch":
+		elif self.path.startswith("/fetch"):
 			self.send_response(200)
 			self.end_headers()
 			self.wfile.write(str(gts).encode())
